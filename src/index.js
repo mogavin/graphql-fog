@@ -1,31 +1,11 @@
 const express = require('express'),
 graphqlHTTP = require('express-graphql'),
-{ makeExecutableSchema } = require('graphql-tools');
+{ makeExecutableSchema } = require('graphql-tools'),
+schema = require('./graphql');
 
-const port = 3000;
+const port = 3000,
+app = express();
 
-const typeDefs = `
-type Query {
-  user: User
-}
-type User {
-  name: String
-}`;
-
-const resolvers = {
-  Query: {
-    user: (root, args, context, info) => {
-      return {name: 'Teste'};
-    }
-  },
-};
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
-
-const app = express();
 app.use('/', graphqlHTTP({
   schema: schema,
   graphiql: true //Set to false if you don't want graphiql enabled
