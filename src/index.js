@@ -1,6 +1,5 @@
 const express = require('express'),
 graphqlHTTP = require('express-graphql'),
-{ makeExecutableSchema } = require('graphql-tools'),
 schema = require('./graphql');
 
 const port = 3000,
