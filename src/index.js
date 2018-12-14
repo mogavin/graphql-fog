@@ -7,7 +7,7 @@ app = express();
 
 app.use('/', graphqlHTTP({
   schema: schema,
-  graphiql: true //Set to false if you don't want graphiql enabled
+  graphiql: process.env.NODE_ENV === 'development'
 }));
 
 app.listen(port);
