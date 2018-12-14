@@ -1,6 +1,5 @@
 const { assert } = require('chai'),
-createRepository = require('./index'),
-initialData = require('./data');
+createRepository = require('./index');
 
 describe('Jogo Repository', () => {
   const dbEngine = [
