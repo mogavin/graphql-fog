@@ -1,4 +1,4 @@
-const {getWithQuery, getById} = require('../../../repository/jogo');
+const {getWithQuery, getById} = require('../../../repository/jogo')();
 
 module.exports = {
 	Query: {
