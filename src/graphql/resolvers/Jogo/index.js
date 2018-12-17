@@ -6,7 +6,7 @@ module.exports = ({recuperarViaQuery, recuperarPeloId, salvar, atualizar} = _rep
     jogos: () => recuperarViaQuery(),
 	},
   Mutation: {
-    jogoCreate: (root, jogo) => salvar(jogo),
-    jogoUpdate: (root, {id, data}) => atualizar(id, data),
+    jogoCreate: (root, {input}) => salvar(input),
+    jogoUpdate: (root, {id, input}) => atualizar(id, input),
   }
 });

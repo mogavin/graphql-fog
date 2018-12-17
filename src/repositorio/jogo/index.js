@@ -9,10 +9,10 @@ module.exports = (db = _db) => ({
     db.push(aSalvar);
     return db[id - 1];
   },
-  atualizar: (id, data) => {
+  atualizar: (id, input) => {
     const idAlvo = id - 1,
     alvo = db[idAlvo];
-    db.splice(idAlvo, 1, {...alvo, ...data});
+    db.splice(idAlvo, 1, {...alvo, ...input});
     return db[idAlvo];
   }
 });

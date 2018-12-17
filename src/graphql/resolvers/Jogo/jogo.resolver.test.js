@@ -37,24 +37,24 @@ describe('Jogo Resolver', () => {
   });
 
   it('deve criar um novo jogo', () => {
-    const novo = {titulo: 'Jogo novo'},
+    const input = {titulo: 'Jogo input'},
     expected = 'Jogo_salvo';
 
-    stubRepository.salvar.withArgs(novo).returns(expected)
+    stubRepository.salvar.withArgs(input).returns(expected)
 
-    const actual = resolver.Mutation.jogoCreate(null, novo);
+    const actual = resolver.Mutation.jogoCreate(null, {input});
 
     assert.deepEqual(actual, expected);
   });
 
   it('deve atualizar um jogo', () => {
     const id = 3,
-    data = {titulo: 'Novo titulo'},
+    input = {titulo: 'Novo titulo'},
     expected = 'Jogo_atualizado';
 
-    stubRepository.atualizar.withArgs(id, data).returns(expected)
+    stubRepository.atualizar.withArgs(id, input).returns(expected)
 
-    const actual = resolver.Mutation.jogoUpdate(null, {id, data});
+    const actual = resolver.Mutation.jogoUpdate(null, {id, input});
 
     assert.deepEqual(actual, expected);
   });
