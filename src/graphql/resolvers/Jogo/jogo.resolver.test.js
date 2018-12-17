@@ -1,22 +1,22 @@
 const sinon = require('sinon'),
 stub = sinon.stub,
-resetAllStubs = sinon.reset,
+resetarTodosStubs = sinon.reset,
 { assert } = require('chai'),
-createResolver = require('./index');
+criarResolver = require('./index');
 
 describe('Jogo Resolver', () => {
   const stubRepository = {
-    getById: stub(),
-    getWithQuery: stub(),
+    recuperarPeloId: stub(),
+    recuperarViaQuery: stub(),
   },
-  resolver = createResolver(stubRepository);
+  resolver = criarResolver(stubRepository);
 
-  beforeEach(() => resetAllStubs());
+  beforeEach(() => resetarTodosStubs());
 
   it('deve recuperar todos os jogos', () => {
     const expected = ['Game_1', 'Game_2'];
 
-    stubRepository.getWithQuery.returns(expected)
+    stubRepository.recuperarViaQuery.returns(expected)
 
     const actual = resolver.Query.jogos();
 
@@ -27,7 +27,7 @@ describe('Jogo Resolver', () => {
     const id = 512,
     expected = 'Game_1';
 
-    stubRepository.getById.withArgs(id).returns(expected)
+    stubRepository.recuperarPeloId.withArgs(id).returns(expected)
 
     const actual = resolver.Query.jogo(null, {id});
 
