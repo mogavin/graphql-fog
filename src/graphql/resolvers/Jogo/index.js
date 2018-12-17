@@ -1,8 +1,11 @@
-const _repository = require('../../../repositorio/jogo')();
+const _repositorio = require('../../../repositorio/jogo')();
 
-module.exports = ({recuperarViaQuery, recuperarPeloId} = _repository) => ({
+module.exports = ({recuperarViaQuery, recuperarPeloId, salvar} = _repositorio) => ({
 	Query: {
-    jogo: (root, {id}, context, info) => recuperarPeloId(id),
+    jogo: (root, {id}) => recuperarPeloId(id),
     jogos: () => recuperarViaQuery(),
 	},
+  Mutation: {
+    jogoCreate: (root, jogo) => salvar(jogo),
+  }
 });

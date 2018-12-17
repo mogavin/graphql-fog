@@ -8,13 +8,14 @@ describe('Jogo Resolver', () => {
   const stubRepository = {
     recuperarPeloId: stub(),
     recuperarViaQuery: stub(),
+    salvar: stub(),
   },
   resolver = criarResolver(stubRepository);
 
   beforeEach(() => resetarTodosStubs());
 
   it('deve recuperar todos os jogos', () => {
-    const expected = ['Game_1', 'Game_2'];
+    const expected = ['Jogo_1', 'Jogo_2'];
 
     stubRepository.recuperarViaQuery.returns(expected)
 
@@ -23,13 +24,24 @@ describe('Jogo Resolver', () => {
     assert.deepEqual(actual, expected);
   });
 
-   it('deve recuperar um jogo pelo id', () => {
+  it('deve recuperar um jogo pelo id', () => {
     const id = 512,
-    expected = 'Game_1';
+    expected = 'Jogo_1';
 
     stubRepository.recuperarPeloId.withArgs(id).returns(expected)
 
     const actual = resolver.Query.jogo(null, {id});
+
+    assert.deepEqual(actual, expected);
+  });
+
+  it('deve criar um novo jogo', () => {
+    const novo = {titulo: 'Jogo novo'},
+    expected = 'Jogo_salvo';
+
+    stubRepository.salvar.withArgs(novo).returns(expected)
+
+    const actual = resolver.Mutation.jogoCreate(null, novo);
 
     assert.deepEqual(actual, expected);
   });

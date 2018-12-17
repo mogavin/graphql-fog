@@ -1,4 +1,6 @@
-module.exports = (db = []) => ({
+const _db = [];
+
+module.exports = (db = _db) => ({
   recuperarViaQuery: query => db,
   recuperarPeloId: id => db[id - 1],
   salvar: jogo => {

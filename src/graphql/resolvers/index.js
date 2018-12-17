@@ -1,5 +1,5 @@
 const { mergeResolvers } = require('merge-graphql-schemas'),
-Jogo = require('./Jogo');
+Jogo = require('./Jogo')();
 
 const resolvers = [Jogo];
 
