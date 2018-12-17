@@ -38,4 +38,28 @@ describe('Jogo Repository', () => {
 
     assert.deepEqual(actual, expected);
   });
+
+  it('deve salvar um novo jogo', () => {
+    const novo = {
+      serie: 'Blue Hedgehog',
+      titulo: 'Blue Hedgehog & Spiked Red',
+      genero: 'Plataforma',
+    },
+    actual = repository.save(novo);
+
+    assert.include(actual, novo);
+  });
+
+  it('deve atualizar um jogo', () => {
+    const idAlvo = 3,
+    novoGenero = 'Action RPG',
+    expected = {
+      serie: 'Spiked Hair Fantasy',
+      titulo: 'Spiked Hair Fantasy VVIII',
+      genero: novoGenero,
+    },
+    actual = repository.update(idAlvo, {genero: novoGenero});
+
+    assert.include(actual, expected);
+  });
 });

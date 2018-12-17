@@ -12,6 +12,6 @@ describe('Jogo Query Tests', () => {
         }
       `;
     const actual = await graphql(schema, query);
-    console.log(actual);
+    //console.log(actual);
   });
 });

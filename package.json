@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "NODE_ENV=development node src/index.js",
-    "test": "jest --env=node --watch --verbose"
+    "test": "jest --env=node --watch"
   },
   "author": "Andre Gavino",
   "license": "ISC",
