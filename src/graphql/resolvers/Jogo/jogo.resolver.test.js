@@ -9,6 +9,7 @@ describe('Jogo Resolver', () => {
     recuperarPeloId: stub(),
     recuperarViaQuery: stub(),
     salvar: stub(),
+    atualizar: stub()
   },
   resolver = criarResolver(stubRepository);
 
@@ -42,6 +43,18 @@ describe('Jogo Resolver', () => {
     stubRepository.salvar.withArgs(novo).returns(expected)
 
     const actual = resolver.Mutation.jogoCreate(null, novo);
+
+    assert.deepEqual(actual, expected);
+  });
+
+  it('deve atualizar um jogo', () => {
+    const id = 3,
+    data = {titulo: 'Novo titulo'},
+    expected = 'Jogo_atualizado';
+
+    stubRepository.atualizar.withArgs(id, data).returns(expected)
+
+    const actual = resolver.Mutation.jogoUpdate(null, {id, data});
 
     assert.deepEqual(actual, expected);
   });

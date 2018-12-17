@@ -5,6 +5,7 @@ type Query {
 }
 type Mutation {
   jogoCreate(serie: String!, titulo: String!, genero: String!): Jogo
+  jogoUpdate(id: ID!, serie: String, titulo: String, genero: String): Jogo
 }
 type Jogo {
   id: ID!
