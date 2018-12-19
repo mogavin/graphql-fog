@@ -1,7 +1,8 @@
 const { mergeTypes } = require('merge-graphql-schemas'),
-jogo = require('./jogo');
+jogo = require('./jogo'),
+comuns = require('./comuns');
 
-const typeDefs = [jogo];
+const typeDefs = [jogo, comuns];
 
 // NOTE: 2nd param is optional, and defaults to false
 // Only use if you have defined the same type multiple times in

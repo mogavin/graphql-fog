@@ -3,6 +3,7 @@ const { assert } = require('chai'),
 { makeExecutableSchema } = require('graphql-tools'),
 criarJogoResolver = require('../resolvers/jogo'),
 criarJogoRepositorio = require('../../repositorio/jogo'),
+comuns = require('../tipos/comuns'),
 type = require('../tipos/jogo');
 
 describe('Jogo Queries', () => {
@@ -30,8 +31,11 @@ describe('Jogo Queries', () => {
   repositorio = criarJogoRepositorio(db),
   resolver = criarJogoResolver(repositorio),
   schema = makeExecutableSchema({
-    typeDefs: [type],
+    typeDefs: [type, comuns],
     resolvers: [resolver],
+    resolverValidationOptions: {
+      requireResolversForResolveType: false
+    }
   }),
   limparDb = () => db.splice(0, db.length),
   popularDb = () => db.push(...JOGOS);

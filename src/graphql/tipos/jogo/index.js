@@ -12,7 +12,7 @@ input JogoInput {
   titulo: String
   genero: Genero
 }
-type Jogo {
+type Jogo implements Node {
   id: ID!
   serie: String
   titulo: String

@@ -4,7 +4,10 @@ resolvers = require('./resolvers');
 
 const schema = makeExecutableSchema({
   typeDefs,
-  resolvers
+  resolvers,
+  resolverValidationOptions: {
+    requireResolversForResolveType: false
+  }
 });
 
 module.exports = schema;
