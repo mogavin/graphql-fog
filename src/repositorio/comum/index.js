@@ -12,5 +12,6 @@ module.exports = db => ({
     alvo = db[idAlvo];
     db.splice(idAlvo, 1, {...alvo, ...input});
     return db[idAlvo];
-  }
+  },
+  remover: id => db.splice(id - 1, 1)[0],
 });

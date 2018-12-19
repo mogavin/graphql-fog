@@ -2,7 +2,7 @@ const { assert } = require('chai'),
 criarRepositorio = require('./index');
 
 describe('Jogo Repositorio', () => {
-  const db = [
+  const DADOS = [
     {
       id: 1,
       serie: 'Sonic The Hedgehog',
@@ -22,11 +22,13 @@ describe('Jogo Repositorio', () => {
       genero: 'RPG',
     },
   ];
-  let repositorio;
+  let db, repositorio;
 
   beforeEach(() => {
+    db = [...DADOS];
     repositorio = criarRepositorio(db);
   });
+  
 
   it('deve recuperar todos os jogos caso nenhuma query seja passada', () => {
     const expected = db,
@@ -49,9 +51,10 @@ describe('Jogo Repositorio', () => {
       titulo: 'Sonic & Knuckles',
       genero: 'Plataforma',
     },
-    actual = repositorio.salvar(novo);
+    salva = repositorio.salvar(novo);
 
-    assert.include(actual, novo);
+    assert.include(salva, novo);
+    assert.include(db, salva);
   });
 
   it('deve atualizar um jogo', () => {
@@ -62,8 +65,22 @@ describe('Jogo Repositorio', () => {
       titulo: 'Final Fantasy VII',
       genero: novoGenero,
     },
-    actual = repositorio.atualizar(idAlvo, {genero: novoGenero});
+    atualizada = repositorio.atualizar(idAlvo, {genero: novoGenero});
 
-    assert.include(actual, expected);
+    assert.include(atualizada, expected);
+    assert.include(db, atualizada);
+  });
+
+  it('deve remover um jogo', () => {
+    const idAlvo = 2,
+    expected = {
+      serie: 'Mario', 
+      titulo: 'Super Mario World',
+      genero: 'Plataforma',
+    },
+    removida = repositorio.remover(idAlvo);
+
+    assert.include(removida, expected);
+    assert.notInclude(db, removida);
   });
 });

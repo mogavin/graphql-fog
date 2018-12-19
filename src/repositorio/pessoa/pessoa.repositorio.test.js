@@ -2,7 +2,7 @@ const { assert } = require('chai'),
 criarRepositorio = require('./index');
 
 describe('Pessoa Repositorio', () => {
-  const db = [
+  const DADOS = [
     {
       id: 1,
       nome: 'Jack Tequila',
@@ -22,11 +22,13 @@ describe('Pessoa Repositorio', () => {
       cpf: '34873692571',
     },    
   ];
-  let repositorio;
+  let db, repositorio;
 
   beforeEach(() => {
+    db = [...DADOS];
     repositorio = criarRepositorio(db);
   });
+  
 
   it('deve recuperar todos as pessoas caso nenhuma query seja passada', () => {
     const expected = db,
@@ -49,9 +51,10 @@ describe('Pessoa Repositorio', () => {
       idade: 30,
       cpf: '23550366248',
     },
-    actual = repositorio.salvar(novo);
+    salva = repositorio.salvar(novo);
 
-    assert.include(actual, novo);
+    assert.include(salva, novo);
+    assert.include(db, salva);
   });
 
   it('deve atualizar os dados de uma pessoa', () => {
@@ -62,8 +65,22 @@ describe('Pessoa Repositorio', () => {
       idade: novaIdade,
       cpf: '34873692571',
     },
-    actual = repositorio.atualizar(idAlvo, {idade: novaIdade});
+    atualizada = repositorio.atualizar(idAlvo, {idade: novaIdade});
 
-    assert.include(actual, expected);
+    assert.include(atualizada, expected);
+    assert.include(db, atualizada);
+  });
+
+  it('deve remover uma pessoa', () => {
+    const idAlvo = 2,
+    expected = {
+      nome: 'Katia Flavia',
+      idade: 18,
+      cpf: '17853149808',
+    },
+    removida = repositorio.remover(idAlvo);
+
+    assert.include(removida, expected);
+    assert.notInclude(db, removida);
   });
 });
