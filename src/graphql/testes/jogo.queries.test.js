@@ -1,9 +1,9 @@
 const { assert } = require('chai'),
 { graphql, buildSchema } = require('graphql'),
 { makeExecutableSchema } = require('graphql-tools'),
-criarJogoResolver = require('../resolvers/Jogo'),
+criarJogoResolver = require('../resolvers/jogo'),
 criarJogoRepositorio = require('../../repositorio/jogo'),
-type = require('../tipos/Jogo');
+type = require('../tipos/jogo');
 
 describe('Jogo Queries', () => {
   const JOGOS = [
