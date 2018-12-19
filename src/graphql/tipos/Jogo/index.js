@@ -21,4 +21,5 @@ type Jogo {
 enum Genero {
   Plataforma
   RPG
+  Acao
 }`;
