@@ -61,7 +61,7 @@ describe('Jogo Queries', () => {
       } 
     };
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(actual, expected, `${actual.errors}`);
   });
 
   it('deve buscar jogos pelo id', async () => {
@@ -81,7 +81,7 @@ describe('Jogo Queries', () => {
       } 
     };
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(actual, expected, `${actual.errors}`);
   });
 
   it('deve criar um novo jogo', async () => {
@@ -101,7 +101,7 @@ describe('Jogo Queries', () => {
       } 
     };
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(actual, expected, `${actual.errors}`);
   });
 
   it('deve atualizar dados de um jogo existente', async () => {
@@ -123,6 +123,6 @@ describe('Jogo Queries', () => {
       }
     };
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(actual, expected, `${actual.errors}`);
   });
 });
