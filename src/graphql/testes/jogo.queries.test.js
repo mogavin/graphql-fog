@@ -129,4 +129,24 @@ describe('Jogo Queries', () => {
 
     assert.deepEqual(actual, expected, `${actual.errors}`);
   });
+
+  it('deve remover jogos pelo id', async () => {
+    const mutation = `
+      mutation {
+        jogoRemove(id: 2) {
+          serie
+        }  
+      }
+    `;
+    const actual = await graphql(schema, mutation),
+    expected = { 
+      data: {
+        jogoRemove: { 
+          serie: 'Mario',
+        } 
+      } 
+    };
+
+    assert.deepEqual(actual, expected, `${actual.errors}`);
+  });
 });

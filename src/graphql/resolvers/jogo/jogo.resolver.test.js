@@ -9,7 +9,8 @@ describe('Jogo Resolver', () => {
     recuperarPeloId: stub(),
     recuperarViaQuery: stub(),
     salvar: stub(),
-    atualizar: stub()
+    atualizar: stub(),
+    remover: stub(),
   },
   resolver = criarResolver(stubRepository);
 
@@ -55,6 +56,17 @@ describe('Jogo Resolver', () => {
     stubRepository.atualizar.withArgs(id, input).returns(expected)
 
     const actual = resolver.Mutation.jogoUpdate(null, {id, input});
+
+    assert.deepEqual(actual, expected);
+  });
+
+  it('deve remover um jogo', () => {
+    const id = 3,
+    expected = 'Jogo_removido';
+
+    stubRepository.remover.withArgs(id).returns(expected)
+
+    const actual = resolver.Mutation.jogoRemove(null, {id});
 
     assert.deepEqual(actual, expected);
   });

@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   jogoCreate(input: JogoInput!): Jogo
   jogoUpdate(id: ID!, input: JogoInput!): Jogo
+  jogoRemove(id: ID!): Jogo
 }
 input JogoInput {
   serie: String
