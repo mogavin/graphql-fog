@@ -3,8 +3,7 @@ const { assert } = require('chai'),
 { makeExecutableSchema } = require('graphql-tools'),
 criarJogoResolver = require('../resolvers/jogo'),
 criarJogoRepositorio = require('../../repositorio/jogo'),
-comum = require('../tipos/comum'),
-type = require('../tipos/jogo');
+type = require('../tipos/produto/jogo');
 
 describe('Jogo Queries', () => {
   const JOGOS = [
@@ -13,25 +12,28 @@ describe('Jogo Queries', () => {
       serie: 'Sonic The Hedgehog',
       titulo: 'Sonic The Hedgehog 2',
       genero: 'Plataforma',
+      preco: 60.00,
     },
     {
       id: 2,
       serie: 'Mario', 
       titulo: 'Super Mario World',
       genero: 'Plataforma',
+      preco: 10.00,
     },
     {
       id: 3,
       serie: 'Final Fantasy',
       titulo: 'Final Fantasy VII',
       genero: 'RPG',
+      preco: 200.50,
     },
   ],
   db = [],
   repositorio = criarJogoRepositorio(db),
   resolver = criarJogoResolver(repositorio),
   schema = makeExecutableSchema({
-    typeDefs: [type, comum],
+    typeDefs: [type],
     resolvers: [resolver],
     resolverValidationOptions: {
       requireResolversForResolveType: false
@@ -91,7 +93,12 @@ describe('Jogo Queries', () => {
   it('deve criar um novo jogo', async () => {
     const mutation = `
       mutation {
-        jogoCreate(input: {serie: "Resident Evil", titulo: "Resident Evil 3: Nemesis", genero: Acao}) {
+        jogoCreate(input: {
+            serie: "Resident Evil", 
+            titulo: "Resident Evil 3: Nemesis", 
+            genero: Acao, 
+            preco: 100.00
+        }){
           serie
         }
       }

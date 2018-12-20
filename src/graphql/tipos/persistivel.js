@@ -1,4 +1,4 @@
 module.exports = `
-interface Node {
+interface Persistivel {
   id: ID!
 }`;
