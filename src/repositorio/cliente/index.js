@@ -3,16 +3,16 @@ _db = [];
 
 module.exports = (db = _db) => ({
   ...criarRepositorioComum(db),
-  addProdutoListaDesejos: (id, idProduto) => {
+  addProdutosListaDesejos: (id, idsProdutos) => {
     const idAlvo = id - 1,
     alvo = db[idAlvo];
-    alvo.listaDesejos.push(idProduto);
+    alvo.listaDesejos.push(...idsProdutos);
     return alvo;
   },
-  addProdutoCarrinho: (id, idProduto) => {
+  addProdutosCarrinho: (id, idsProdutos) => {
     const idAlvo = id - 1,
     alvo = db[idAlvo];
-    alvo.carrinhoCompras.push(idProduto);
+    alvo.carrinhoCompras.push(...idsProdutos);
     return alvo;
   },
 });

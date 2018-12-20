@@ -1,4 +1,4 @@
 module.exports = `
 interface Produto {
-  preco: Float
+  preco: Float!
 }`;

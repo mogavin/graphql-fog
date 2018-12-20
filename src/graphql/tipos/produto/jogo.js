@@ -20,10 +20,10 @@ input JogoInput {
 }
 type Jogo implements Produto & Persistivel {
   id: ID!
-  serie: String
-  titulo: String
-  genero: Genero
-  preco: Float
+  serie: String!
+  titulo: String!
+  genero: Genero!
+  preco: Float!
 }
 enum Genero {
   Plataforma

@@ -1,7 +1,7 @@
 const { assert } = require('chai'),
 criarRepositorio = require('./index');
 
-describe('UsuarioFog Repositorio', () => {
+describe('Cliente Repositorio', () => {
   const DADOS = [
     {
       id: 1,
@@ -36,14 +36,14 @@ describe('UsuarioFog Repositorio', () => {
   });
   
 
-  it('deve recuperar todos os usuarios caso nenhuma query seja passada', () => {
+  it('deve recuperar todos os clientes caso nenhuma query seja passada', () => {
     const expected = db,
     actual = repositorio.recuperarViaQuery();
 
     assert.deepEqual(actual, expected);
   });
 
-  it('deve recuperar um usuario pelo id', () => {
+  it('deve recuperar um cliente pelo id', () => {
     const idAlvo = 1,
     expected = DADOS[idAlvo - 1],
     actual = repositorio.recuperarPeloId(idAlvo);
@@ -51,7 +51,7 @@ describe('UsuarioFog Repositorio', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('deve salvar um novo usuario', () => {
+  it('deve salvar um novo cliente', () => {
     const novo = {
       nome: 'João de Santo Cristo',
       idade: 30,
@@ -65,7 +65,7 @@ describe('UsuarioFog Repositorio', () => {
     assert.include(db, salvo);
   });
 
-  it('deve atualizar os dados de um usuario', () => {
+  it('deve atualizar os dados de um cliente', () => {
     const idAlvo = 3,
     novaIdade = 41,
     expected = {
@@ -78,7 +78,7 @@ describe('UsuarioFog Repositorio', () => {
     assert.include(db, atualizado);
   });
 
-  it('deve remover um usuario', () => {
+  it('deve remover um cliente', () => {
     const idAlvo = 2,
     expected = {
       ...DADOS[idAlvo - 1],
@@ -89,29 +89,29 @@ describe('UsuarioFog Repositorio', () => {
     assert.notInclude(db, removido);
   });
 
-  it('deve adicionar um novo produto na lista de desejos de um usuario', () => {
+  it('deve adicionar novos produtos na lista de desejos de um cliente', () => {
     const idUsuario = 2,
-    usuario = DADOS[idUsuario - 1],
-    idProduto = 501,
+    cliente = DADOS[idUsuario - 1],
+    idsProdutos = [501, 784],
     expected = {
-      ...usuario,
-      listaDesejos: [...usuario.listaDesejos, idProduto],
+      ...cliente,
+      listaDesejos: [...cliente.listaDesejos, ...idsProdutos],
     },
-    atualizado = repositorio.addProdutoListaDesejos(idUsuario, idProduto);
+    atualizado = repositorio.addProdutosListaDesejos(idUsuario, idsProdutos);
 
     assert.deepInclude(atualizado, expected);
     assert.include(db, atualizado);
   });
 
-  it('deve adicionar um novo produto no carrinho de compras de um usuario', () => {
+  it('deve adicionar novos produtos no carrinho de compras de um cliente', () => {
     const idUsuario = 2,
-    usuario = DADOS[idUsuario - 1],
-    idProduto = 501,
+    cliente = DADOS[idUsuario - 1],
+    idsProdutos = [501, 784],
     expected = {
-      ...usuario,
-      carrinhoCompras: [...usuario.carrinhoCompras, idProduto],
+      ...cliente,
+      carrinhoCompras: [...cliente.carrinhoCompras, ...idsProdutos],
     },
-    atualizado = repositorio.addProdutoCarrinho(idUsuario, idProduto);
+    atualizado = repositorio.addProdutosCarrinho(idUsuario, idsProdutos);
 
     assert.deepInclude(atualizado, expected);
     assert.include(db, atualizado);
