@@ -17,57 +17,57 @@ describe('Jogo Resolver', () => {
   beforeEach(() => resetarTodosStubs());
 
   it('deve recuperar todos os jogos', () => {
-    const expected = ['Jogo_1', 'Jogo_2'];
+    const esperado = ['Jogo_1', 'Jogo_2'];
 
-    stubRepository.recuperarViaQuery.returns(expected)
+    stubRepository.recuperarViaQuery.returns(esperado)
 
-    const actual = resolver.Query.jogos();
+    const atual = resolver.Query.jogos();
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve recuperar um jogo pelo id', () => {
     const id = 512,
-    expected = 'Jogo_1';
+    esperado = 'Jogo_1';
 
-    stubRepository.recuperarPeloId.withArgs(id).returns(expected)
+    stubRepository.recuperarPeloId.withArgs(id).returns(esperado)
 
-    const actual = resolver.Query.jogo(null, {id});
+    const atual = resolver.Query.jogo(null, {id});
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve criar um novo jogo', () => {
     const input = {titulo: 'Jogo input'},
-    expected = 'Jogo_salvo';
+    esperado = 'Jogo_salvo';
 
-    stubRepository.salvar.withArgs(input).returns(expected)
+    stubRepository.salvar.withArgs(input).returns(esperado)
 
-    const actual = resolver.Mutation.jogoCreate(null, {input});
+    const atual = resolver.Mutation.jogoCreate(null, {input});
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve atualizar um jogo', () => {
     const id = 3,
     input = {titulo: 'Novo titulo'},
-    expected = 'Jogo_atualizado';
+    esperado = 'Jogo_atualizado';
 
-    stubRepository.atualizar.withArgs(id, input).returns(expected)
+    stubRepository.atualizar.withArgs(id, input).returns(esperado)
 
-    const actual = resolver.Mutation.jogoUpdate(null, {id, input});
+    const atual = resolver.Mutation.jogoUpdate(null, {id, input});
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve remover um jogo', () => {
     const id = 3,
-    expected = 'Jogo_removido';
+    esperado = 'Jogo_removido';
 
-    stubRepository.remover.withArgs(id).returns(expected)
+    stubRepository.remover.withArgs(id).returns(esperado)
 
-    const actual = resolver.Mutation.jogoRemove(null, {id});
+    const atual = resolver.Mutation.jogoRemove(null, {id});
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 })

@@ -31,18 +31,18 @@ describe('Jogo Repositorio', () => {
   
 
   it('deve recuperar todos os jogos caso nenhuma query seja passada', () => {
-    const expected = db,
-    actual = repositorio.recuperarViaQuery();
+    const esperado = db,
+    atual = repositorio.recuperarViaQuery();
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve recuperar um jogo pelo id', () => {
     const id = 1,
-    expected = db[id - 1],
-    actual = repositorio.recuperarPeloId(id);
+    esperado = db[id - 1],
+    atual = repositorio.recuperarPeloId(id);
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve salvar um novo jogo', () => {
@@ -60,27 +60,27 @@ describe('Jogo Repositorio', () => {
   it('deve atualizar um jogo', () => {
     const idAlvo = 3,
     novoGenero = 'RPG Japonês',
-    expected = {
+    esperado = {
       serie: 'Final Fantasy',
       titulo: 'Final Fantasy VII',
       genero: novoGenero,
     },
     atualizada = repositorio.atualizar(idAlvo, {genero: novoGenero});
 
-    assert.include(atualizada, expected);
+    assert.include(atualizada, esperado);
     assert.include(db, atualizada);
   });
 
   it('deve remover um jogo', () => {
     const idAlvo = 2,
-    expected = {
+    esperado = {
       serie: 'Mario', 
       titulo: 'Super Mario World',
       genero: 'Plataforma',
     },
     removida = repositorio.remover(idAlvo);
 
-    assert.include(removida, expected);
+    assert.include(removida, esperado);
     assert.notInclude(db, removida);
   });
 });

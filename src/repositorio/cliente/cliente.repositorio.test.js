@@ -37,18 +37,18 @@ describe('Cliente Repositorio', () => {
   
 
   it('deve recuperar todos os clientes caso nenhuma query seja passada', () => {
-    const expected = db,
-    actual = repositorio.recuperarViaQuery();
+    const esperado = db,
+    atual = repositorio.recuperarViaQuery();
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve recuperar um cliente pelo id', () => {
     const idAlvo = 1,
-    expected = DADOS[idAlvo - 1],
-    actual = repositorio.recuperarPeloId(idAlvo);
+    esperado = DADOS[idAlvo - 1],
+    atual = repositorio.recuperarPeloId(idAlvo);
 
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(atual, esperado);
   });
 
   it('deve salvar um novo cliente', () => {
@@ -68,24 +68,24 @@ describe('Cliente Repositorio', () => {
   it('deve atualizar os dados de um cliente', () => {
     const idAlvo = 3,
     novaIdade = 41,
-    expected = {
+    esperado = {
       ...DADOS[idAlvo - 1],
       idade: novaIdade,
     },
     atualizado = repositorio.atualizar(idAlvo, {idade: novaIdade});
 
-    assert.include(atualizado, expected);
+    assert.include(atualizado, esperado);
     assert.include(db, atualizado);
   });
 
   it('deve remover um cliente', () => {
     const idAlvo = 2,
-    expected = {
+    esperado = {
       ...DADOS[idAlvo - 1],
     },
     removido = repositorio.remover(idAlvo);
 
-    assert.include(removido, expected);
+    assert.include(removido, esperado);
     assert.notInclude(db, removido);
   });
 
@@ -93,13 +93,13 @@ describe('Cliente Repositorio', () => {
     const idUsuario = 2,
     cliente = DADOS[idUsuario - 1],
     idsProdutos = [501, 784],
-    expected = {
+    esperado = {
       ...cliente,
       listaDesejos: [...cliente.listaDesejos, ...idsProdutos],
     },
     atualizado = repositorio.addProdutosListaDesejos(idUsuario, idsProdutos);
 
-    assert.deepInclude(atualizado, expected);
+    assert.deepInclude(atualizado, esperado);
     assert.include(db, atualizado);
   });
 
@@ -107,13 +107,13 @@ describe('Cliente Repositorio', () => {
     const idUsuario = 2,
     cliente = DADOS[idUsuario - 1],
     idsProdutos = [501, 784],
-    expected = {
+    esperado = {
       ...cliente,
       carrinhoCompras: [...cliente.carrinhoCompras, ...idsProdutos],
     },
     atualizado = repositorio.addProdutosCarrinho(idUsuario, idsProdutos);
 
-    assert.deepInclude(atualizado, expected);
+    assert.deepInclude(atualizado, esperado);
     assert.include(db, atualizado);
   });
 });

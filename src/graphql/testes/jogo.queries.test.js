@@ -56,8 +56,8 @@ describe('Jogo Queries', () => {
         }  
       }
     `;
-    const actual = await graphql(schema, query),
-    expected = { 
+    const atual = await graphql(schema, query),
+    esperado = { 
       data: { 
         jogos: [
           {serie: 'Sonic The Hedgehog'},
@@ -67,7 +67,7 @@ describe('Jogo Queries', () => {
       } 
     };
 
-    assert.deepEqual(actual, expected, `${actual.errors}`);
+    assert.deepEqual(atual, esperado, `${atual.errors}`);
   });
 
   it('deve buscar jogos pelo id', async () => {
@@ -78,8 +78,8 @@ describe('Jogo Queries', () => {
         }  
       }
     `;
-    const actual = await graphql(schema, query),
-    expected = { 
+    const atual = await graphql(schema, query),
+    esperado = { 
       data: { 
         jogo: { 
           serie: 'Sonic The Hedgehog',
@@ -87,7 +87,7 @@ describe('Jogo Queries', () => {
       } 
     };
 
-    assert.deepEqual(actual, expected, `${actual.errors}`);
+    assert.deepEqual(atual, esperado, `${atual.errors}`);
   });
 
   it('deve criar um novo jogo', async () => {
@@ -103,8 +103,8 @@ describe('Jogo Queries', () => {
         }
       }
     `;
-    const actual = await graphql(schema, mutation),
-    expected = { 
+    const atual = await graphql(schema, mutation),
+    esperado = { 
       data: { 
         jogoCreate: { 
           serie: 'Resident Evil',
@@ -112,7 +112,7 @@ describe('Jogo Queries', () => {
       } 
     };
 
-    assert.deepEqual(actual, expected, `${actual.errors}`);
+    assert.deepEqual(atual, esperado, `${atual.errors}`);
   });
 
   it('deve atualizar dados de um jogo existente', async () => {
@@ -124,8 +124,8 @@ describe('Jogo Queries', () => {
         }
       }
     `;
-    const actual = await graphql(schema, mutation),
-    expected = { 
+    const atual = await graphql(schema, mutation),
+    esperado = { 
       data: { 
         jogoUpdate: { 
           id: '3',
@@ -134,7 +134,7 @@ describe('Jogo Queries', () => {
       }
     };
 
-    assert.deepEqual(actual, expected, `${actual.errors}`);
+    assert.deepEqual(atual, esperado, `${atual.errors}`);
   });
 
   it('deve remover jogos pelo id', async () => {
@@ -145,8 +145,8 @@ describe('Jogo Queries', () => {
         }  
       }
     `;
-    const actual = await graphql(schema, mutation),
-    expected = { 
+    const atual = await graphql(schema, mutation),
+    esperado = { 
       data: {
         jogoRemove: { 
           serie: 'Mario',
@@ -154,6 +154,6 @@ describe('Jogo Queries', () => {
       } 
     };
 
-    assert.deepEqual(actual, expected, `${actual.errors}`);
+    assert.deepEqual(atual, esperado, `${atual.errors}`);
   });
 });
