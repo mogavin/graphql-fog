@@ -1,7 +1,6 @@
 const { mergeTypes } = require('merge-graphql-schemas'),
 persistivel = require('../persistivel'),
 produto = require('../produto');
-usuario = require('./');
 
 const cliente = `
 type Query {
@@ -15,14 +14,20 @@ type Mutation {
   clienteAddProdutosListaDesejos(idCliente: ID!, idsProdutos: [ID!]!): Cliente
   clienteAddProdutosCarrinho(idCliente: ID!, idsProdutos: [ID!]!): Cliente
 }
+input ClienteInput {
+  nome: String
+  cpf: String
+  idade: Int
+}
 type Cliente implements Persistivel {
   id: ID!
-  dados: Pessoa!
+  nome: String!
+  cpf: String!
   idade: Int!
   listaDesejos: [Produto]!
   carrinhoCompras: [Produto]!
 }`;
 
-const typeDefs = [usuario, cliente, persistivel, produto];
+const typeDefs = [cliente, persistivel, produto];
 
 module.exports = mergeTypes(typeDefs, { all: true });
