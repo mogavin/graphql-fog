@@ -3,7 +3,7 @@ const { assert } = require('chai'),
 { makeExecutableSchema } = require('graphql-tools'),
 criarClienteResolver = require('../resolvers/usuario/cliente'),
 criarClienteRepositorio = require('../../repositorio/cliente'),
-type = require('../tipos/usuario/cliente');
+type = require('../tipos/usuario');
 
 describe('Cliente Queries', () => {
   const CLIENTES = [

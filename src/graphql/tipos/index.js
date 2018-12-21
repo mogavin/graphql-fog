@@ -1,7 +1,8 @@
 const { mergeTypes } = require('merge-graphql-schemas'),
 produto = require('./produto'),
-comum = require('./node');
+comum = require('./comum'),
+usuario = require('./usuario');
 
-const typeDefs = [produto, comum];
+const typeDefs = [produto, comum, usuario];
 
 module.exports = mergeTypes(typeDefs, { all: true });

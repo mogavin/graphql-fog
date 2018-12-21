@@ -3,7 +3,7 @@ const { assert } = require('chai'),
 { makeExecutableSchema } = require('graphql-tools'),
 criarJogoResolver = require('../resolvers/produto/jogo'),
 criarJogoRepositorio = require('../../repositorio/jogo'),
-type = require('../tipos/produto/jogo');
+type = require('../tipos/produto');
 
 describe('Jogo Queries', () => {
   const JOGOS = [

@@ -1,7 +1,6 @@
 const { mergeResolvers } = require('merge-graphql-schemas'),
-produto = require('./produto'),
-usuario = require('./usuario');
+jogo = require('./jogo')();
 
-const resolvers = [produto, usuario];
+const resolvers = [jogo];
 
 module.exports = mergeResolvers(resolvers);

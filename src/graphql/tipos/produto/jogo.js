@@ -1,8 +1,4 @@
-const { mergeTypes } = require('merge-graphql-schemas'),
-persistivel = require('../comum/persistivel');
-produto = require('./');
-
-const jogo = `
+module.exports = `
 type Query {
   jogo(id: ID!): Jogo
   jogos: [Jogo!]!
@@ -30,7 +26,3 @@ enum Genero {
   RPG
   Acao
 }`;
-
-const typeDefs = [jogo, produto, persistivel];
-
-module.exports = mergeTypes(typeDefs, { all: true });

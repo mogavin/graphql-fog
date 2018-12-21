@@ -1,8 +1,4 @@
-const { mergeTypes } = require('merge-graphql-schemas'),
-persistivel = require('../comum/persistivel'),
-produto = require('../produto');
-
-const cliente = `
+module.exports = `
 type Query {
   cliente(id: ID!): Cliente
   clientes: [Cliente!]!
@@ -27,7 +23,3 @@ type Cliente implements Persistivel {
   listaDesejos: [Produto]!
   carrinhoCompras: [Produto]!
 }`;
-
-const typeDefs = [cliente, persistivel, produto];
-
-module.exports = mergeTypes(typeDefs, { all: true });
