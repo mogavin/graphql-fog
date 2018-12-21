@@ -76,7 +76,7 @@ describe('Cliente Queries', () => {
       } 
     };
 
-    assert.deepEqual(atual, esperado, `${atual.errors}`);
+    assert.deepEqual(atual, esperado, atual.errors);
   });
 
   it('deve buscar clientes pelo id', async () => {
@@ -96,7 +96,7 @@ describe('Cliente Queries', () => {
       } 
     };
 
-    assert.deepEqual(atual, esperado, `${atual.errors}`);
+    assert.deepEqual(atual, esperado, atual.errors);
   });
 
   it('deve criar um novo cliente', async () => {
@@ -120,7 +120,7 @@ describe('Cliente Queries', () => {
       } 
     };
 
-    assert.deepEqual(atual, esperado, `${atual.errors}`);
+    assert.deepEqual(atual, esperado, atual.errors);
   });
 
   it('deve atualizar dados de um cliente existente', async () => {
@@ -142,7 +142,7 @@ describe('Cliente Queries', () => {
       }
     };
 
-    assert.deepEqual(atual, esperado, `${atual.errors}`);
+    assert.deepEqual(atual, esperado, atual.errors);
   });
 
   it('deve remover clientes pelo id', async () => {
@@ -162,6 +162,6 @@ describe('Cliente Queries', () => {
       } 
     };
 
-    assert.deepEqual(atual, esperado, `${atual.errors}`);
+    assert.deepEqual(atual, esperado, atual.errors);
   });
 });
