@@ -1,4 +1,4 @@
-const _repositorio = require('../../../repositorio/jogo')();
+const _repositorio = require('../../../../repositorio/jogo')();
 
 module.exports = ({recuperarViaQuery, recuperarPeloId, salvar, atualizar, remover} = _repositorio) => ({
 	Query: {

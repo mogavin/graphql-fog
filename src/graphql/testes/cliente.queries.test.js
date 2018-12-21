@@ -1,7 +1,7 @@
 const { assert } = require('chai'),
 { graphql, buildSchema } = require('graphql'),
 { makeExecutableSchema } = require('graphql-tools'),
-criarClienteResolver = require('../resolvers/cliente'),
+criarClienteResolver = require('../resolvers/usuario/cliente'),
 criarClienteRepositorio = require('../../repositorio/cliente'),
 type = require('../tipos/usuario/cliente');
 

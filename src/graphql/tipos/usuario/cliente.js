@@ -1,5 +1,5 @@
 const { mergeTypes } = require('merge-graphql-schemas'),
-persistivel = require('../persistivel'),
+persistivel = require('../comum/persistivel'),
 produto = require('../produto');
 
 const cliente = `

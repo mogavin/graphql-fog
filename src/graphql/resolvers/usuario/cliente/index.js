@@ -1,4 +1,4 @@
-const _repositorio = require('../../../repositorio/cliente')();
+const _repositorio = require('../../../../repositorio/cliente')();
 
 module.exports = ({
     recuperarViaQuery, 
