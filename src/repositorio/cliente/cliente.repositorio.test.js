@@ -90,28 +90,28 @@ describe('Cliente Repositorio', () => {
   });
 
   it('deve adicionar novos produtos na lista de desejos de um cliente', () => {
-    const idUsuario = 2,
-    cliente = DADOS[idUsuario - 1],
+    const idCliente = 2,
+    cliente = DADOS[idCliente - 1],
     idsProdutos = [501, 784],
     esperado = {
       ...cliente,
       listaDesejos: [...cliente.listaDesejos, ...idsProdutos],
     },
-    atualizado = repositorio.addProdutosListaDesejos(idUsuario, idsProdutos);
+    atualizado = repositorio.addProdutosListaDesejos(idCliente, idsProdutos);
 
     assert.deepInclude(atualizado, esperado);
     assert.include(db, atualizado);
   });
 
   it('deve adicionar novos produtos no carrinho de compras de um cliente', () => {
-    const idUsuario = 2,
-    cliente = DADOS[idUsuario - 1],
+    const idCliente = 2,
+    cliente = DADOS[idCliente - 1],
     idsProdutos = [501, 784],
     esperado = {
       ...cliente,
       carrinhoCompras: [...cliente.carrinhoCompras, ...idsProdutos],
     },
-    atualizado = repositorio.addProdutosCarrinho(idUsuario, idsProdutos);
+    atualizado = repositorio.addProdutosCarrinho(idCliente, idsProdutos);
 
     assert.deepInclude(atualizado, esperado);
     assert.include(db, atualizado);

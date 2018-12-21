@@ -12,8 +12,8 @@ type Mutation {
   clienteCreate(input: ClienteInput!): Cliente
   clienteUpdate(id: ID!, input: ClienteInput!): Cliente
   clienteRemove(id: ID!): Cliente
-  addProdutosListaDesejos(idsProdutos: [ID!]!): Cliente
-  addProdutosCarrinho(idsProdutos: [ID!]!): Cliente
+  clienteAddProdutosListaDesejos(idCliente: ID!, idsProdutos: [ID!]!): Cliente
+  clienteAddProdutosCarrinho(idCliente: ID!, idsProdutos: [ID!]!): Cliente
 }
 type Cliente implements Persistivel {
   id: ID!
