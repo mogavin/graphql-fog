@@ -5,23 +5,31 @@ resetarTodosStubs = sinon.reset,
 criarResolver = require('./index');
 
 describe('Cliente Resolver', () => {
-  const stubRepository = {
+  const stubClienteRepositorio = {
     recuperarPeloId: stub(),
     recuperarViaQuery: stub(),
     salvar: stub(),
     atualizar: stub(),
     remover: stub(),
+    listaDesejos: stub(),
+    carrinhoCompras: stub(),
     addProdutosListaDesejos: stub(),
     addProdutosCarrinho: stub(),
   },
-  resolver = criarResolver(stubRepository);
+  stubProdutoRepositorio = {
+    recuperarPorIds: stub(),    
+  },
+  resolver = criarResolver({
+    clienteRepositorio: stubClienteRepositorio,
+    produtoRepositorio: stubProdutoRepositorio,
+  });
 
   beforeEach(() => resetarTodosStubs());
 
   it('deve recuperar todos os clientes', () => {
     const esperado = ['Cliente_1', 'Cliente_2'];
 
-    stubRepository.recuperarViaQuery.returns(esperado)
+    stubClienteRepositorio.recuperarViaQuery.returns(esperado)
 
     const atual = resolver.Query.clientes();
 
@@ -32,7 +40,7 @@ describe('Cliente Resolver', () => {
     const id = 512,
     esperado = 'Cliente_1';
 
-    stubRepository.recuperarPeloId.withArgs(id).returns(esperado)
+    stubClienteRepositorio.recuperarPeloId.withArgs(id).returns(esperado)
 
     const atual = resolver.Query.cliente(null, {id});
 
@@ -43,7 +51,7 @@ describe('Cliente Resolver', () => {
     const input = {titulo: 'Cliente input'},
     esperado = 'Cliente_salvo';
 
-    stubRepository.salvar.withArgs(input).returns(esperado)
+    stubClienteRepositorio.salvar.withArgs(input).returns(esperado)
 
     const atual = resolver.Mutation.clienteCreate(null, {input});
 
@@ -55,7 +63,7 @@ describe('Cliente Resolver', () => {
     input = {titulo: 'Novo titulo'},
     esperado = 'Cliente_atualizado';
 
-    stubRepository.atualizar.withArgs(id, input).returns(esperado)
+    stubClienteRepositorio.atualizar.withArgs(id, input).returns(esperado)
 
     const atual = resolver.Mutation.clienteUpdate(null, {id, input});
 
@@ -66,7 +74,7 @@ describe('Cliente Resolver', () => {
     const id = 3,
     esperado = 'Cliente_removido';
 
-    stubRepository.remover.withArgs(id).returns(esperado)
+    stubClienteRepositorio.remover.withArgs(id).returns(esperado)
 
     const atual = resolver.Mutation.clienteRemove(null, {id});
 
@@ -78,7 +86,7 @@ describe('Cliente Resolver', () => {
     idsProdutos = [501, 784],
     esperado = 'Lista_desejos_atualizada';
 
-    stubRepository.addProdutosListaDesejos.withArgs(idCliente, idsProdutos).returns(esperado)
+    stubClienteRepositorio.addProdutosListaDesejos.withArgs(idCliente, idsProdutos).returns(esperado)
 
     const atual = resolver.Mutation.clienteAddProdutosListaDesejos(null, {idCliente, idsProdutos});
 
@@ -90,9 +98,37 @@ describe('Cliente Resolver', () => {
     idsProdutos = [501, 784],
     esperado = 'Carrinho_compras_atualizado';
 
-    stubRepository.addProdutosCarrinho.withArgs(idCliente, idsProdutos).returns(esperado)
+    stubClienteRepositorio.addProdutosCarrinho.withArgs(idCliente, idsProdutos).returns(esperado)
 
     const atual = resolver.Mutation.clienteAddProdutosCarrinho(null, {idCliente, idsProdutos});
+
+    assert.deepEqual(atual, esperado);
+  });
+
+  it('deve retornar produtos da lista de desejos de um cliente', () => {
+    const listaDesejos = [501, 784],
+    cliente = {
+      listaDesejos,
+    },
+    esperado = ['Produto_1, Produto_2'];
+
+    stubProdutoRepositorio.recuperarPorIds.withArgs(listaDesejos).returns(esperado)
+
+    const atual = resolver.Cliente.listaDesejos(cliente);
+
+    assert.deepEqual(atual, esperado);
+  });
+
+  it('deve retornar produtos do carrinho de compras de um cliente', () => {
+    const carrinhoCompras = [501, 784],
+    cliente = {
+      carrinhoCompras,
+    },
+    esperado = ['Produto_1'];
+
+    stubProdutoRepositorio.recuperarPorIds.withArgs(carrinhoCompras).returns(esperado)
+
+    const atual = resolver.Cliente.carrinhoCompras(cliente);
 
     assert.deepEqual(atual, esperado);
   });

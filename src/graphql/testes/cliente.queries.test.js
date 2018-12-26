@@ -33,8 +33,10 @@ describe('Cliente Queries', () => {
     },    
   ],
   db = [],
-  repositorio = criarClienteRepositorio(db),
-  resolver = criarClienteResolver(repositorio),
+  clienteRepositorio = criarClienteRepositorio(db),
+  resolver = criarClienteResolver({
+    clienteRepositorio,
+  }),
   schema = makeExecutableSchema({
     typeDefs: [type],
     resolvers: [resolver],

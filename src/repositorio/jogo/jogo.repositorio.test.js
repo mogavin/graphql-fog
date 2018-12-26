@@ -45,6 +45,14 @@ describe('Jogo Repositorio', () => {
     assert.deepEqual(atual, esperado);
   });
 
+  it('deve recuperar jogos por ids', () => {
+    const ids = [1, 3],
+    esperado = [db[0], db[2]],
+    atual = repositorio.recuperarPorIds(ids);
+
+    assert.deepEqual(atual, esperado);
+  });
+
   it('deve salvar um novo jogo', () => {
     const novo = {
       serie: 'Sonic The Hedgehog',

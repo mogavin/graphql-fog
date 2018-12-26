@@ -3,4 +3,7 @@ _repositorio = require('../../../../repositorio/jogo')();
 
 module.exports = (repositorio = _repositorio) => ({
 	...criarResolverComum(repositorio),
+  Jogo: {
+    __isTypeOf: () => 'Jogo',
+  }
 });

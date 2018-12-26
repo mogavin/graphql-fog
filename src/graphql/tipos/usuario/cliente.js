@@ -20,6 +20,6 @@ type Cliente implements Persistivel {
   nome: String!
   cpf: String!
   idade: Int!
-  listaDesejos: [Produto]!
+  listaDesejos: Produto!
   carrinhoCompras: [Produto]!
 }`;
