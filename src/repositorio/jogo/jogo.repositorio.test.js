@@ -2,36 +2,36 @@ const { assert } = require('chai'),
 criarRepositorio = require('./index');
 
 describe('Jogo Repositorio', () => {
-  const DADOS = [
-    {
+  const DADOS = {
+    1: {
       id: 1,
       serie: 'Sonic The Hedgehog',
       titulo: 'Sonic The Hedgehog 2',
       genero: 'Plataforma',
     },
-    {
+    2: {
       id: 2,
       serie: 'Mario', 
       titulo: 'Super Mario World',
       genero: 'Plataforma',
     },
-    {
+    3: {
       id: 3,
       serie: 'Final Fantasy',
       titulo: 'Final Fantasy VII',
       genero: 'RPG',
     },
-  ];
+  };
   let db, repositorio;
 
   beforeEach(() => {
-    db = [...DADOS];
+    db = {jogos: {...DADOS}};
     repositorio = criarRepositorio(db);
   });
   
 
   it('deve recuperar todos os jogos caso nenhuma query seja passada', () => {
-    const esperado = db,
+    const esperado = [DADOS[1], DADOS[2], DADOS[3]],
     atual = repositorio.recuperarViaQuery();
 
     assert.deepEqual(atual, esperado);
@@ -39,7 +39,7 @@ describe('Jogo Repositorio', () => {
 
   it('deve recuperar um jogo pelo id', () => {
     const id = 1,
-    esperado = db[id - 1],
+    esperado = DADOS[id],
     atual = repositorio.recuperarPeloId(id);
 
     assert.deepEqual(atual, esperado);
@@ -47,22 +47,24 @@ describe('Jogo Repositorio', () => {
 
   it('deve recuperar jogos por ids', () => {
     const ids = [1, 3],
-    esperado = [db[0], db[2]],
+    esperado = [DADOS[1], DADOS[3]],
     atual = repositorio.recuperarPorIds(ids);
 
     assert.deepEqual(atual, esperado);
   });
 
   it('deve salvar um novo jogo', () => {
-    const novo = {
+    const jogosNaBase = () => Object.values(db.jogos).length,
+    novo = {
       serie: 'Sonic The Hedgehog',
       titulo: 'Sonic & Knuckles',
       genero: 'Plataforma',
     },
-    salva = repositorio.salvar(novo);
+    salvo = repositorio.salvar(novo);
 
-    assert.include(salva, novo);
-    assert.include(db, salva);
+    assert.include(salvo, novo);
+    assert.include(db.jogos[salvo.id], salvo);
+    assert.equal(jogosNaBase(), 4);
   });
 
   it('deve atualizar um jogo', () => {
@@ -73,10 +75,10 @@ describe('Jogo Repositorio', () => {
       titulo: 'Final Fantasy VII',
       genero: novoGenero,
     },
-    atualizada = repositorio.atualizar(idAlvo, {genero: novoGenero});
+    atualizado = repositorio.atualizar(idAlvo, {genero: novoGenero});
 
-    assert.include(atualizada, esperado);
-    assert.include(db, atualizada);
+    assert.include(atualizado, esperado);
+    assert.include(db.jogos[atualizado.id], atualizado);
   });
 
   it('deve remover um jogo', () => {
@@ -86,9 +88,9 @@ describe('Jogo Repositorio', () => {
       titulo: 'Super Mario World',
       genero: 'Plataforma',
     },
-    removida = repositorio.remover(idAlvo);
+    removido = repositorio.remover(idAlvo);
 
-    assert.include(removida, esperado);
-    assert.notInclude(db, removida);
+    assert.include(removido, esperado);
+    assert.isNotOk(db.jogos[removido.id]);
   });
 });

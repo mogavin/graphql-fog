@@ -1,17 +1,15 @@
 const criarRepositorioComum = require('../comum'),
-_db = [];
+_db = require('../../db');
 
 module.exports = (db = _db) => ({
-  ...criarRepositorioComum(db),
+  ...criarRepositorioComum(db, 'clientes'),
   addProdutosListaDesejos: (id, idsProdutos) => {
-    const idAlvo = id - 1,
-    alvo = db[idAlvo];
+    const alvo = db.clientes[id];
     alvo.listaDesejos.push(...idsProdutos);
     return alvo;
   },
   addProdutosCarrinho: (id, idsProdutos) => {
-    const idAlvo = id - 1,
-    alvo = db[idAlvo];
+    alvo = db.clientes[id];
     alvo.carrinhoCompras.push(...idsProdutos);
     return alvo;
   },

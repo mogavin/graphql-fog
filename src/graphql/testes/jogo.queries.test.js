@@ -6,30 +6,30 @@ criarJogoRepositorio = require('../../repositorio/jogo'),
 type = require('../tipos/produto');
 
 describe('Jogo Queries', () => {
-  const JOGOS = [
-    {
+  const JOGOS = {
+    1: {
       id: 1,
       serie: 'Sonic The Hedgehog',
       titulo: 'Sonic The Hedgehog 2',
       genero: 'Plataforma',
       preco: 60.00,
     },
-    {
+    2: {
       id: 2,
       serie: 'Mario', 
       titulo: 'Super Mario World',
       genero: 'Plataforma',
       preco: 10.00,
     },
-    {
+    3: {
       id: 3,
       serie: 'Final Fantasy',
       titulo: 'Final Fantasy VII',
       genero: 'RPG',
       preco: 200.50,
     },
-  ],
-  db = [],
+  },
+  db = {jogos: {}},
   repositorio = criarJogoRepositorio(db),
   resolver = criarJogoResolver(repositorio),
   schema = makeExecutableSchema({
@@ -39,8 +39,8 @@ describe('Jogo Queries', () => {
       requireResolversForResolveType: false
     }
   }),
-  limparDb = () => db.splice(0, db.length),
-  popularDb = () => db.push(...JOGOS);
+  limparDb = () => db.jogos = {},
+  popularDb = () => db.jogos = {...JOGOS};
 
   beforeAll(() => {
     limparDb();
@@ -121,6 +121,7 @@ describe('Jogo Queries', () => {
         jogoUpdate(id: 3, input: { titulo: "Final Fantasy X" }) {
           id
           titulo
+          genero
         }
       }
     `;
@@ -130,6 +131,7 @@ describe('Jogo Queries', () => {
         jogoUpdate: { 
           id: '3',
           titulo: 'Final Fantasy X',
+          genero: 'RPG',
         } 
       }
     };

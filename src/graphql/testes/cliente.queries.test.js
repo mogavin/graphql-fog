@@ -6,8 +6,8 @@ criarClienteRepositorio = require('../../repositorio/cliente'),
 type = require('../tipos/usuario');
 
 describe('Cliente Queries', () => {
-  const CLIENTES = [
-    {
+  const CLIENTES = {
+    1: {
       id: 1,
       nome: 'Jack Tequila',
       idade: 40,
@@ -15,7 +15,7 @@ describe('Cliente Queries', () => {
       listaDesejos: [3, 6, 8],
       carrinhoCompras: [5, 25, 8],
     },
-    {
+    2: {
       id: 2,
       nome: 'Katia Flavia',
       idade: 18,
@@ -23,7 +23,7 @@ describe('Cliente Queries', () => {
       listaDesejos: [1],
       carrinhoCompras: [41, 89],
     },
-    {
+    3: {
       id: 3,
       nome: 'Florentina de Jesus',
       idade: 50,
@@ -31,8 +31,8 @@ describe('Cliente Queries', () => {
       listaDesejos: [28],
       carrinhoCompras: [],
     },    
-  ],
-  db = [],
+  },
+  db = {clientes: {}},
   clienteRepositorio = criarClienteRepositorio(db),
   resolver = criarClienteResolver({
     clienteRepositorio,
@@ -44,8 +44,8 @@ describe('Cliente Queries', () => {
       requireResolversForResolveType: false
     }
   }),
-  limparDb = () => db.splice(0, db.length),
-  popularDb = () => db.push(...CLIENTES);
+  limparDb = () => db.clientes = {},
+  popularDb = () => db.clientes = {...CLIENTES};
 
   beforeAll(() => {
     limparDb();
@@ -110,17 +110,21 @@ describe('Cliente Queries', () => {
           cpf: "23550366248"
         }){
           nome
+          idade
+          cpf
         }
       }
     `;
     const atual = await graphql(schema, mutation),
     esperado = { 
       data: { 
-        clienteCreate: { 
+        clienteCreate: {
           nome: 'João de Santo Cristo',
+          idade: 30,
+          cpf: "23550366248",
         } 
       } 
-    };
+    };        
 
     assert.deepEqual(atual, esperado, atual.errors);
   });
@@ -131,6 +135,7 @@ describe('Cliente Queries', () => {
         clienteUpdate(id: 3, input: { idade: 80 }) {
           id
           nome
+          idade
         }
       }
     `;
@@ -140,6 +145,7 @@ describe('Cliente Queries', () => {
         clienteUpdate: { 
           id: '3',
           nome: 'Florentina de Jesus',
+          idade: 80,
         } 
       }
     };
