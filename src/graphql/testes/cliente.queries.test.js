@@ -137,6 +137,78 @@ describe('Cliente Queries', () => {
     assert.deepEqual(atual, esperado, atual.errors);
   });
 
+  it('deve recuperar os produtos da lista de desejos', async () => {
+    const query = `
+      {
+        cliente(id: 1) {
+          listaDesejos {
+            preco
+          }
+        }
+      }  
+    `;
+    const atual = await graphql(schema, query),
+    esperado = { 
+      data: {
+        cliente: { 
+          listaDesejos: [
+            {
+              preco: 60,
+            },
+            {
+              preco: 10,
+            },
+            {
+              preco: 200.50,
+            },
+          ],
+        } 
+      } 
+    };
+
+    assert.deepEqual(atual, esperado, atual.errors);
+  });
+
+  it('deve recuperar um carrinho de compras', async () => {
+    const query = `
+      {
+        cliente(id: 2) {
+          carrinhoCompras {
+            produtos {
+              preco
+              ... on Jogo {
+                titulo
+              }
+            }
+            total
+          }
+        }
+      }  
+    `;
+    const atual = await graphql(schema, query),
+    esperado = { 
+      data: {
+        cliente: { 
+          carrinhoCompras: {
+            produtos: [
+              {
+                preco: 10,
+                titulo: 'Super Mario World',
+              },
+              {
+                preco: 200.50,
+                titulo: 'Final Fantasy VII',
+              },
+            ],
+            total: 210.50,
+          }          
+        } 
+      } 
+    };
+
+    assert.deepEqual(atual, esperado, atual.errors);
+  });
+
   it('deve criar um novo cliente', async () => {
     const mutation = `
       mutation {
@@ -207,71 +279,5 @@ describe('Cliente Queries', () => {
     };
 
     assert.deepEqual(atual, esperado, atual.errors);
-  });
-
-  it('deve recuperar os produtos da lista de desejos', async () => {
-    const query = `
-      {
-        cliente(id: 1) {
-          listaDesejos {
-            preco
-          }
-        }
-      }  
-    `;
-    const atual = await graphql(schema, query),
-    esperado = { 
-      data: {
-        cliente: { 
-          listaDesejos: [
-            {
-              preco: 60,
-            },
-            {
-              preco: 10,
-            },
-            {
-              preco: 200.50,
-            },
-          ],
-        } 
-      } 
-    };
-
-    assert.deepEqual(atual, esperado, atual.errors);
-  });
-
-  it('deve recuperar os produtos do carrinho de compras', async () => {
-    const query = `
-      {
-        cliente(id: 2) {
-          carrinhoCompras {
-            preco
-            ... on Jogo {
-              titulo
-            }
-          }
-        }
-      }  
-    `;
-    const atual = await graphql(schema, query),
-    esperado = { 
-      data: {
-        cliente: { 
-          carrinhoCompras: [
-            {
-              preco: 10,
-              titulo: 'Super Mario World',
-            },
-            {
-              preco: 200.50,
-              titulo: 'Final Fantasy VII',
-            },
-          ],
-        } 
-      } 
-    };
-
-    assert.deepEqual(atual, esperado, atual.errors);
-  });
+  });  
 });

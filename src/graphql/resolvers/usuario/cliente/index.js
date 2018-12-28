@@ -20,5 +20,11 @@ module.exports = ({
       listaDesejos: ({listaDesejos: idsProdutos}) => produtoRepositorio.recuperarPorIds(idsProdutos),
       carrinhoCompras: ({carrinhoCompras: idsProdutos}) => produtoRepositorio.recuperarPorIds(idsProdutos),
     },
+    CarrinhoCompras: {
+      produtos: carrinhoCliente => carrinhoCliente,
+      total: carrinhoCliente => carrinhoCliente.reduce((total, {preco}) => 
+        (total + preco)
+      , 0),
+    }
   };
 };

@@ -119,7 +119,7 @@ describe('Cliente Resolver', () => {
     assert.deepEqual(atual, esperado);
   });
 
-  it('deve retornar produtos do carrinho de compras de um cliente', () => {
+  it('deve retornar carrinho de compras de um cliente', () => {
     const carrinhoCompras = [501, 784],
     cliente = {
       carrinhoCompras,
@@ -129,6 +129,30 @@ describe('Cliente Resolver', () => {
     stubProdutoRepositorio.recuperarPorIds.withArgs(carrinhoCompras).returns(esperado)
 
     const atual = resolver.Cliente.carrinhoCompras(cliente);
+
+    assert.deepEqual(atual, esperado);
+  });
+
+  it('deve retornar produtos do carrinho de compras de um cliente', () => {
+    const esperado = ['Produto_1', 'Produto_2'];
+
+    const atual = resolver.CarrinhoCompras.produtos(esperado);
+
+    assert.deepEqual(atual, esperado);
+  });
+
+  it('deve retornar o total do carrinho de compras de um cliente', () => {
+    const carrinhoCliente = [
+      {
+        preco: 200,
+      },
+      {
+        preco: 300,
+      },
+    ],
+    esperado = 500;
+
+    const atual = resolver.CarrinhoCompras.total(carrinhoCliente);
 
     assert.deepEqual(atual, esperado);
   });
