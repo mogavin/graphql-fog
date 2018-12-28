@@ -17,8 +17,8 @@ module.exports = ({
         clienteRepositorio.addProdutosCarrinho(idCliente, idsProdutos),
     },
     Cliente: {
-      listaDesejos: ({listaDesejos}) => produtoRepositorio.recuperarPorIds(listaDesejos),
-      carrinhoCompras: ({carrinhoCompras}) => produtoRepositorio.recuperarPorIds(carrinhoCompras),
+      listaDesejos: ({listaDesejos: idsProdutos}) => produtoRepositorio.recuperarPorIds(idsProdutos),
+      carrinhoCompras: ({carrinhoCompras: idsProdutos}) => produtoRepositorio.recuperarPorIds(idsProdutos),
     },
   };
 };

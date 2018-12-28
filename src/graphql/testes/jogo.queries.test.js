@@ -42,7 +42,7 @@ describe('Jogo Queries', () => {
   limparDb = () => db.jogos = {},
   popularDb = () => db.jogos = {...JOGOS};
 
-  beforeAll(() => {
+  beforeEach(() => {
     limparDb();
     popularDb();
   });

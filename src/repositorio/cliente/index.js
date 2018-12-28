@@ -9,7 +9,7 @@ module.exports = (db = _db) => ({
     return alvo;
   },
   addProdutosCarrinho: (id, idsProdutos) => {
-    alvo = db.clientes[id];
+    const alvo = db.clientes[id];
     alvo.carrinhoCompras.push(...idsProdutos);
     return alvo;
   },
