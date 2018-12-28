@@ -212,7 +212,7 @@ describe('Cliente Queries', () => {
   it('deve criar um novo cliente', async () => {
     const mutation = `
       mutation {
-        clienteCreate(input: {
+        clienteCreate (input: {
           nome: "João de Santo Cristo",
           idade: 30,
           cpf: "23550366248"
