@@ -56,14 +56,17 @@ describe('Cliente Repositorio', () => {
     novo = {
       nome: 'João de Santo Cristo',
       idade: 30,
-      cpf: '23550366248',
+      cpf: '23550366248',      
+    },
+    esperado = {
+      ...novo,
       listaDesejos: [],
       carrinhoCompras: [],
     },
     salvo = repositorio.salvar(novo);
 
-    assert.include(salvo, novo);
-    assert.include(db.clientes[salvo.id], salvo);
+    assert.deepInclude(salvo, esperado);
+    assert.deepInclude(db.clientes[salvo.id], esperado);
     assert.equal(clientesNaBase(), 4);
   });
 
