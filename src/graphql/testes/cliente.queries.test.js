@@ -10,6 +10,7 @@ criarSoftwareResolver = require('../resolvers/produto/software'),
 produtoType = require('../tipos/produto'),
 usuarioType = require('../tipos/usuario');
 
+
 describe('Cliente Queries', () => {
   const CLIENTES = {
     1: {
@@ -48,7 +49,7 @@ describe('Cliente Queries', () => {
     2: {
       id: 2,
       nome: 'Game Maker VX',
-      plataforma: 'Windows',
+      plataformas: ['Windows'],
       preco: 10.00,
     },
     3: {
@@ -73,7 +74,7 @@ describe('Cliente Queries', () => {
     resolvers: mergeResolvers([clienteResolver, jogoResolver, softwareResolver]),
     resolverValidationOptions: {
       requireResolversForResolveType: false
-    }
+    },
   }),
   limparDb = () => {
     db.clientes = {};

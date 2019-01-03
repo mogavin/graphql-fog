@@ -7,16 +7,18 @@ type Mutation {
   softwareCreate(input: SofwareInput!): Software
   softwareUpdate(id: ID!, input: SofwareInput!): Software
   softwareRemove(id: ID!): Software
+  softwareAddPlataforma(plataforma: Plataforma!): Software
 }
 input SofwareInput {
   nome: String
-  plataforma: Plataforma
+  plataformas: [Plataforma]
   preco: Float
 }
 type Software implements Produto & Persistivel {
   id: ID!
   nome: String!
-  plataforma: Plataforma!
+  plataforma: Plataforma! @deprecated(reason: "Utilize \`plataformas\`.")
+  plataformas: [Plataforma!]!
   preco: Float!
 }
 enum Plataforma {

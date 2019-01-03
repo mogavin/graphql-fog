@@ -11,6 +11,7 @@ describe('Software Resolver', () => {
     salvar: stub(),
     atualizar: stub(),
     remover: stub(),
+    addPlataforma: stub(),
   },
   resolver = criarResolver(stubRepository);
 
@@ -67,6 +68,18 @@ describe('Software Resolver', () => {
     stubRepository.remover.withArgs(id).returns(esperado)
 
     const atual = resolver.Mutation.softwareRemove(null, {id});
+
+    assert.deepEqual(atual, esperado);
+  });
+
+  it('deve adicionar uma plataforma', () => {
+    const plataforma = 'Linux',
+    id = 2,
+    esperado = 'Plataforma_adicionada';
+
+    stubRepository.addPlataforma.withArgs(id, plataforma).returns(esperado)
+
+    const atual = resolver.Mutation.softwareAddPlataforma(null, {id, plataforma});
 
     assert.deepEqual(atual, esperado);
   });

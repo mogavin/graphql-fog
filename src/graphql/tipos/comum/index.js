@@ -1,6 +1,8 @@
 const { mergeTypes } = require('merge-graphql-schemas'),
-persistivel = require('./persistivel');
+persistivel = require('./persistivel'),
+diretivas = require('./diretivas');
 
-const typeDefs = [persistivel];
+
+const typeDefs = [persistivel, diretivas];
 
 module.exports = mergeTypes(typeDefs, { all: true });

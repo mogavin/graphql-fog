@@ -1,28 +1,32 @@
 const { assert } = require('chai'),
 { graphql, buildSchema } = require('graphql'),
 { makeExecutableSchema } = require('graphql-tools'),
+{ mergeTypes } = require('merge-graphql-schemas'),
 criarSoftwareResolver = require('../resolvers/produto/software'),
 criarProdutoRepositorio = require('../../repositorio/produto'),
-type = require('../tipos/produto');
+produtoType = require('../tipos/produto'),
+comumType = require('../tipos/comum'),
+{ DeprecatedDirective } = require('graphql-directive-deprecated');
+
 
 describe('Software Queries', () => {
   const SOFTWARES = {
     1: {
       id: 1,
       nome: 'Game Maker VX',
-      plataforma: 'Windows',
+      plataformas: ['Windows', 'macOs'],
       preco: 60.00,
     },
     2: {
       id: 2,
       nome: 'Fences',
-      plataforma: 'Linux',
+      plataformas: ['Linux'],
       preco: 10.00,
     },
     3: {
       id: 3,
       nome: 'Start10',
-      plataforma: 'macOs',
+      plataformas: ['macOs', 'Linux'],
       preco: 200.50,
     },
   },
@@ -30,11 +34,14 @@ describe('Software Queries', () => {
   repositorio = criarProdutoRepositorio(db),
   resolver = criarSoftwareResolver(repositorio),
   schema = makeExecutableSchema({
-    typeDefs: [type],
+    typeDefs: mergeTypes([comumType, produtoType], { all: true }),
     resolvers: [resolver],
     resolverValidationOptions: {
       requireResolversForResolveType: false
-    }
+    },
+    schemaDirectives: {
+      deprecated: DeprecatedDirective
+    },
   }),
   limparDb = () => db.produtos = {},
   popularDb = () => db.produtos = {...SOFTWARES};
@@ -92,8 +99,8 @@ describe('Software Queries', () => {
       mutation {
         softwareCreate(input: {
           nome: "Rone",
-          plataforma: macOs,
           preco: 800.00,
+          plataformas: [Linux, Windows]
         }){
           nome
         }
