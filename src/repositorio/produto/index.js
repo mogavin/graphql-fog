@@ -2,9 +2,9 @@ const criarRepositorioComum = require('../comum'),
 _db = require('../../db');
 
 module.exports = (db = _db) => ({
-  ...criarRepositorioComum(db, 'jogos'),
+  ...criarRepositorioComum(db, 'produtos'),
   recuperarPorIds: ids =>
     ids.reduce((resp, id) =>
-      db.jogos[id] ?resp.concat(db.jogos[id]) :resp
+      db.produtos[id] ?resp.concat(db.produtos[id]) :resp
     , []),
 });

@@ -1,37 +1,34 @@
 const { assert } = require('chai'),
 { graphql, buildSchema } = require('graphql'),
 { makeExecutableSchema } = require('graphql-tools'),
-criarJogoResolver = require('../resolvers/produto/jogo'),
+criarSoftwareResolver = require('../resolvers/produto/software'),
 criarProdutoRepositorio = require('../../repositorio/produto'),
 type = require('../tipos/produto');
 
-describe('Jogo Queries', () => {
-  const JOGOS = {
+describe('Software Queries', () => {
+  const SOFTWARES = {
     1: {
       id: 1,
-      serie: 'Sonic The Hedgehog',
-      titulo: 'Sonic The Hedgehog 2',
-      genero: 'Plataforma',
+      nome: 'Game Maker VX',
+      plataforma: 'Windows',
       preco: 60.00,
     },
     2: {
       id: 2,
-      serie: 'Mario', 
-      titulo: 'Super Mario World',
-      genero: 'Plataforma',
+      nome: 'Fences',
+      plataforma: 'Linux',
       preco: 10.00,
     },
     3: {
       id: 3,
-      serie: 'Final Fantasy',
-      titulo: 'Final Fantasy VII',
-      genero: 'RPG',
+      nome: 'Start10',
+      plataforma: 'macOs',
       preco: 200.50,
     },
   },
   db = {produtos: {}},
   repositorio = criarProdutoRepositorio(db),
-  resolver = criarJogoResolver(repositorio),
+  resolver = criarSoftwareResolver(repositorio),
   schema = makeExecutableSchema({
     typeDefs: [type],
     resolvers: [resolver],
@@ -40,7 +37,7 @@ describe('Jogo Queries', () => {
     }
   }),
   limparDb = () => db.produtos = {},
-  popularDb = () => db.produtos = {...JOGOS};
+  popularDb = () => db.produtos = {...SOFTWARES};
 
   beforeEach(() => {
     limparDb();
@@ -48,21 +45,21 @@ describe('Jogo Queries', () => {
   });
 
 
-  it('deve buscar todos os jogos', async () => {
+  it('deve buscar todos os softwares', async () => {
     const query = `
       {
-        jogos {
-          serie
+        softwares {
+          nome
         }  
       }
     `;
     const atual = await graphql(schema, query),
     esperado = { 
       data: { 
-        jogos: [
-          {serie: 'Sonic The Hedgehog'},
-          {serie: 'Mario'},
-          {serie: 'Final Fantasy'},
+        softwares: [
+          {nome: 'Game Maker VX'},
+          {nome: 'Fences'},
+          {nome: 'Start10'},
         ],
       } 
     };
@@ -70,19 +67,19 @@ describe('Jogo Queries', () => {
     assert.deepEqual(atual, esperado, atual.errors);
   });
 
-  it('deve buscar jogos pelo id', async () => {
+  it('deve buscar softwares pelo id', async () => {
     const query = `
       {
-        jogo(id: 1) {
-          serie
+        software(id: 1) {
+          nome
         }  
       }
     `;
     const atual = await graphql(schema, query),
     esperado = { 
       data: { 
-        jogo: { 
-          serie: 'Sonic The Hedgehog',
+        software: { 
+          nome: 'Game Maker VX',
         } 
       } 
     };
@@ -90,24 +87,23 @@ describe('Jogo Queries', () => {
     assert.deepEqual(atual, esperado, atual.errors);
   });
 
-  it('deve criar um novo jogo', async () => {
+  it('deve criar um novo software', async () => {
     const mutation = `
       mutation {
-        jogoCreate(input: {
-            serie: "Resident Evil", 
-            titulo: "Resident Evil 3: Nemesis", 
-            genero: Acao, 
-            preco: 100.00
+        softwareCreate(input: {
+          nome: "Rone",
+          plataforma: macOs,
+          preco: 800.00,
         }){
-          serie
+          nome
         }
       }
     `;
     const atual = await graphql(schema, mutation),
     esperado = { 
       data: { 
-        jogoCreate: { 
-          serie: 'Resident Evil',
+        softwareCreate: { 
+          nome: 'Rone',
         } 
       } 
     };
@@ -115,23 +111,25 @@ describe('Jogo Queries', () => {
     assert.deepEqual(atual, esperado, atual.errors);
   });
 
-  it('deve atualizar dados de um jogo existente', async () => {
+  it('deve atualizar dados de um software existente', async () => {
     const mutation = `
       mutation {
-        jogoUpdate(id: 3, input: { titulo: "Final Fantasy X" }) {
+        softwareUpdate(id: 3, input: { preco: 150.00 }) {
           id
-          titulo
-          genero
+          nome
+          plataforma
+          preco
         }
       }
     `;
     const atual = await graphql(schema, mutation),
     esperado = { 
       data: { 
-        jogoUpdate: { 
+        softwareUpdate: { 
           id: '3',
-          titulo: 'Final Fantasy X',
-          genero: 'RPG',
+          nome: 'Start10',
+          plataforma: 'macOs',
+          preco: 150.00,
         } 
       }
     };
@@ -139,19 +137,19 @@ describe('Jogo Queries', () => {
     assert.deepEqual(atual, esperado, atual.errors);
   });
 
-  it('deve remover jogos pelo id', async () => {
+  it('deve remover softwares pelo id', async () => {
     const mutation = `
       mutation {
-        jogoRemove(id: 2) {
-          serie
+        softwareRemove(id: 2) {
+          nome
         }  
       }
     `;
     const atual = await graphql(schema, mutation),
     esperado = { 
       data: {
-        jogoRemove: { 
-          serie: 'Mario',
+        softwareRemove: { 
+          nome: 'Fences',
         } 
       } 
     };

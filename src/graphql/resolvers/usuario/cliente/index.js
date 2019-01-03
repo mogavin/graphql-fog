@@ -1,10 +1,10 @@
 const criarResolverComum = require('../../comum')('cliente'),
 _clienteRepositorio = require('../../../../repositorio/cliente')(),
-_jogoRepositorio = require('../../../../repositorio/jogo')();
+_produtoRepositorio = require('../../../../repositorio/produto')();
 
 module.exports = ({
   clienteRepositorio = _clienteRepositorio, 
-  produtoRepositorio = _jogoRepositorio,
+  produtoRepositorio = _produtoRepositorio,
 } = {}) => {
   const resolverComum = criarResolverComum(clienteRepositorio);
   return {

@@ -1,7 +1,7 @@
 const { assert } = require('chai'),
 criarRepositorio = require('./index');
 
-describe('Jogo Repositorio', () => {
+describe('Produto Repositorio', () => {
   const DADOS = {
     1: {
       id: 1,
@@ -11,9 +11,8 @@ describe('Jogo Repositorio', () => {
     },
     2: {
       id: 2,
-      serie: 'Mario', 
-      titulo: 'Super Mario World',
-      genero: 'Plataforma',
+      nome: 'Game Maker VX',
+      plataforma: 'Windows',
     },
     3: {
       id: 3,
@@ -25,19 +24,19 @@ describe('Jogo Repositorio', () => {
   let db, repositorio;
 
   beforeEach(() => {
-    db = {jogos: {...DADOS}};
+    db = {produtos: {...DADOS}};
     repositorio = criarRepositorio(db);
   });
   
 
-  it('deve recuperar todos os jogos caso nenhuma query seja passada', () => {
+  it('deve recuperar todos os produtos caso nenhuma query seja passada', () => {
     const esperado = [DADOS[1], DADOS[2], DADOS[3]],
     atual = repositorio.recuperarViaQuery();
 
     assert.deepEqual(atual, esperado);
   });
 
-  it('deve recuperar um jogo pelo id', () => {
+  it('deve recuperar um produto pelo id', () => {
     const id = 1,
     esperado = DADOS[id],
     atual = repositorio.recuperarPeloId(id);
@@ -45,7 +44,7 @@ describe('Jogo Repositorio', () => {
     assert.deepEqual(atual, esperado);
   });
 
-  it('deve recuperar jogos por ids', () => {
+  it('deve recuperar produtos por ids', () => {
     const ids = [1, 3],
     esperado = [DADOS[1], DADOS[3]],
     atual = repositorio.recuperarPorIds(ids);
@@ -53,8 +52,8 @@ describe('Jogo Repositorio', () => {
     assert.deepEqual(atual, esperado);
   });
 
-  it('deve salvar um novo jogo', () => {
-    const jogosNaBase = () => Object.values(db.jogos).length,
+  it('deve salvar um novo produto', () => {
+    const produtosNaBase = () => Object.values(db.produtos).length,
     novo = {
       serie: 'Sonic The Hedgehog',
       titulo: 'Sonic & Knuckles',
@@ -63,11 +62,11 @@ describe('Jogo Repositorio', () => {
     salvo = repositorio.salvar(novo);
 
     assert.include(salvo, novo);
-    assert.include(db.jogos[salvo.id], salvo);
-    assert.equal(jogosNaBase(), 4);
+    assert.include(db.produtos[salvo.id], salvo);
+    assert.equal(produtosNaBase(), 4);
   });
 
-  it('deve atualizar um jogo', () => {
+  it('deve atualizar um produto', () => {
     const idAlvo = 3,
     novoGenero = 'RPG Japonês',
     esperado = {
@@ -78,19 +77,18 @@ describe('Jogo Repositorio', () => {
     atualizado = repositorio.atualizar(idAlvo, {genero: novoGenero});
 
     assert.include(atualizado, esperado);
-    assert.include(db.jogos[atualizado.id], atualizado);
+    assert.include(db.produtos[atualizado.id], atualizado);
   });
 
-  it('deve remover um jogo', () => {
+  it('deve remover um produto', () => {
     const idAlvo = 2,
     esperado = {
-      serie: 'Mario', 
-      titulo: 'Super Mario World',
-      genero: 'Plataforma',
+      nome: 'Game Maker VX',
+      plataforma: 'Windows',
     },
     removido = repositorio.remover(idAlvo);
 
     assert.include(removido, esperado);
-    assert.isNotOk(db.jogos[removido.id]);
+    assert.isNotOk(db.produtos[removido.id]);
   });
 });

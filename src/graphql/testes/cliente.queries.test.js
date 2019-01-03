@@ -3,9 +3,10 @@ const { assert } = require('chai'),
 { makeExecutableSchema } = require('graphql-tools'),
 { mergeResolvers, mergeTypes } = require('merge-graphql-schemas'),
 criarClienteRepositorio = require('../../repositorio/cliente'),
-criarJogoRepositorio = require('../../repositorio/jogo'),
+criarProdutoRepositorio = require('../../repositorio/produto'),
 criarClienteResolver = require('../resolvers/usuario/cliente'),
 criarJogoResolver = require('../resolvers/produto/jogo'),
+criarSoftwareResolver = require('../resolvers/produto/software'),
 produtoType = require('../tipos/produto'),
 usuarioType = require('../tipos/usuario');
 
@@ -36,7 +37,7 @@ describe('Cliente Queries', () => {
       carrinhoCompras: [],
     },    
   },
-  JOGOS = {
+  PRODUTOS = {
     1: {
       id: 1,
       serie: 'Sonic The Hedgehog',
@@ -46,9 +47,8 @@ describe('Cliente Queries', () => {
     },
     2: {
       id: 2,
-      serie: 'Mario', 
-      titulo: 'Super Mario World',
-      genero: 'Plataforma',
+      nome: 'Game Maker VX',
+      plataforma: 'Windows',
       preco: 10.00,
     },
     3: {
@@ -59,28 +59,29 @@ describe('Cliente Queries', () => {
       preco: 200.50,
     },
   },
-  db = {clientes: {}, jogos: {}},
+  db = {clientes: {}, produtos: {}},
   clienteRepositorio = criarClienteRepositorio(db),
-  jogoRepositorio = criarJogoRepositorio(db),
+  produtoRepositorio = criarProdutoRepositorio(db),
   clienteResolver = criarClienteResolver({
     clienteRepositorio,
-    produtoRepositorio: jogoRepositorio,
+    produtoRepositorio: produtoRepositorio,
   }),
-  jogoResolver = criarJogoResolver(jogoRepositorio),
+  jogoResolver = criarJogoResolver(produtoRepositorio),
+  softwareResolver = criarSoftwareResolver(produtoRepositorio),
   schema = makeExecutableSchema({
     typeDefs: mergeTypes([usuarioType, produtoType], { all: true }),
-    resolvers: mergeResolvers([clienteResolver, jogoResolver]),
+    resolvers: mergeResolvers([clienteResolver, jogoResolver, softwareResolver]),
     resolverValidationOptions: {
       requireResolversForResolveType: false
     }
   }),
   limparDb = () => {
     db.clientes = {};
-    db.jogos = {};
+    db.produtos = {};
   },
   popularDb = () => {
     db.clientes = {...CLIENTES};
-    db.jogos = {...JOGOS};
+    db.produtos = {...PRODUTOS};
   };
 
   beforeEach(() => {
@@ -176,6 +177,9 @@ describe('Cliente Queries', () => {
           carrinhoCompras {
             produtos {
               preco
+              ... on Software {
+                nome
+              }
               ... on Jogo {
                 titulo
               }
@@ -193,7 +197,7 @@ describe('Cliente Queries', () => {
             produtos: [
               {
                 preco: 10,
-                titulo: 'Super Mario World',
+                nome: 'Game Maker VX',
               },
               {
                 preco: 200.50,
@@ -205,7 +209,7 @@ describe('Cliente Queries', () => {
         } 
       } 
     };
-
+    
     assert.deepEqual(atual, esperado, atual.errors);
   });
 
