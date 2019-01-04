@@ -4,20 +4,20 @@ type Query {
   softwares: [Software!]!
 }
 type Mutation {
-  softwareCreate(input: SofwareInput!): Software
-  softwareUpdate(id: ID!, input: SofwareInput!): Software
+  softwareCreate(input: SoftwareInput!): Software
+  softwareUpdate(id: ID!, input: SoftwareInput!): Software
   softwareRemove(id: ID!): Software
-  softwareAddPlataforma(plataforma: Plataforma!): Software
+  softwareAddPlataforma(id: ID!, plataforma: Plataforma!): Software
 }
-input SofwareInput {
+input SoftwareInput {
   nome: String
-  plataformas: [Plataforma]
+  plataformas: [Plataforma!]
   preco: Float
 }
 type Software implements Produto & Persistivel {
   id: ID!
   nome: String!
-  plataforma: Plataforma! @deprecated(reason: "Utilize \`plataformas\`.")
+  plataforma: Plataforma @deprecated(reason: "Utilize \`plataformas\`.")
   plataformas: [Plataforma!]!
   preco: Float!
 }

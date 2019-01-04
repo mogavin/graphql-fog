@@ -1,17 +1,12 @@
-const { makeExecutableSchema } = require('graphql-tools'),
+const { makeExecutableSchema, SchemaDirectiveVisitor } = require('graphql-tools'),
 typeDefs = require('./tipos'),
-resolvers = require('./resolvers'),
-{ DeprecatedDirective } = require('graphql-directive-deprecated');
-
+resolvers = require('./resolvers');
 
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
   resolverValidationOptions: {
     requireResolversForResolveType: false
-  },
-  schemaDirectives: {
-    deprecated: DeprecatedDirective
   },
 });
 

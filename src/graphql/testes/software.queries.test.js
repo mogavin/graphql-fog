@@ -3,10 +3,9 @@ const { assert } = require('chai'),
 { makeExecutableSchema } = require('graphql-tools'),
 { mergeTypes } = require('merge-graphql-schemas'),
 criarSoftwareResolver = require('../resolvers/produto/software'),
-criarProdutoRepositorio = require('../../repositorio/produto'),
+criarSoftwareRepositorio = require('../../repositorio/software'),
 produtoType = require('../tipos/produto'),
-comumType = require('../tipos/comum'),
-{ DeprecatedDirective } = require('graphql-directive-deprecated');
+comumType = require('../tipos/comum');
 
 
 describe('Software Queries', () => {
@@ -31,16 +30,13 @@ describe('Software Queries', () => {
     },
   },
   db = {produtos: {}},
-  repositorio = criarProdutoRepositorio(db),
+  repositorio = criarSoftwareRepositorio(db),
   resolver = criarSoftwareResolver(repositorio),
   schema = makeExecutableSchema({
     typeDefs: mergeTypes([comumType, produtoType], { all: true }),
     resolvers: [resolver],
     resolverValidationOptions: {
       requireResolversForResolveType: false
-    },
-    schemaDirectives: {
-      deprecated: DeprecatedDirective
     },
   }),
   limparDb = () => db.produtos = {},
@@ -103,6 +99,8 @@ describe('Software Queries', () => {
           plataformas: [Linux, Windows]
         }){
           nome
+          plataformas
+          preco
         }
       }
     `;
@@ -111,6 +109,8 @@ describe('Software Queries', () => {
       data: { 
         softwareCreate: { 
           nome: 'Rone',
+          plataformas: ['Linux', 'Windows'],
+          preco: 800.00,
         } 
       } 
     };
@@ -124,7 +124,7 @@ describe('Software Queries', () => {
         softwareUpdate(id: 3, input: { preco: 150.00 }) {
           id
           nome
-          plataforma
+          plataformas
           preco
         }
       }
@@ -135,7 +135,7 @@ describe('Software Queries', () => {
         softwareUpdate: { 
           id: '3',
           nome: 'Start10',
-          plataforma: 'macOs',
+          plataformas: ['macOs', 'Linux'],
           preco: 150.00,
         } 
       }
@@ -159,6 +159,28 @@ describe('Software Queries', () => {
           nome: 'Fences',
         } 
       } 
+    };
+
+    assert.deepEqual(atual, esperado, atual.errors);
+  });
+
+  it('deve adicionar uma nova plataforma', async () => {
+    const mutation = `
+      mutation {
+        softwareAddPlataforma(id: 1, plataforma: Linux) {
+          id
+          plataformas
+        }
+      }
+    `;
+    const atual = await graphql(schema, mutation),
+    esperado = { 
+      data: { 
+        softwareAddPlataforma: { 
+          id: '1',
+          plataformas: ['Windows', 'macOs', 'Linux'],
+        } 
+      }
     };
 
     assert.deepEqual(atual, esperado, atual.errors);
